@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -39,4 +40,14 @@ public class User {
 
     @Column(name = "updateAt")
     private LocalDateTime updateAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Planner> planners;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<MeasureResult> measureResults;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Measurement> measurements;
+
 }
