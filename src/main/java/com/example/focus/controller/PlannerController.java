@@ -1,20 +1,44 @@
 package com.example.focus.controller;
-
-import com.example.focus.entity.User;
-import com.example.focus.repository.UserRepository;
+import com.example.focus.dto.planner.planRequestDTO;
+import com.example.focus.entity.Planner;
+import com.example.focus.service.PlannerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/planner")
+@RequiredArgsConstructor
 public class PlannerController {
 
+    @Autowired
+    private final PlannerService plannerService;
 
 
+    @PostMapping()
+    public ResponseEntity<Planner> createPlan(@RequestBody planRequestDTO planRequestDTODTO) {
+        Planner plan = plannerService.createPlanner(planRequestDTODTO);
+        return (plan != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(plan) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Planner>> getPlannersByUserId(
+            @PathVariable Long userId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
+        List<Planner> planners = plannerService.getPlannersByUserId(userId, deadline);
+        if (planners.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(planners);
+    }
 
 }
