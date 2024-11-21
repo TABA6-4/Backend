@@ -1,12 +1,11 @@
 package com.example.focus.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "Planner")
@@ -17,11 +16,14 @@ import java.time.LocalDateTime;
 public class Planner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PlannerId")
-    private Long PlannerId;
+    @Column(name = "plannerId")
+    private Long plannerId;
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "deadline", nullable = false)
+    private Date deadline;
 
     @Column(name = "createAt")
     private LocalDateTime createAt;
@@ -32,8 +34,20 @@ public class Planner {
     @Column(name = "state")
     private int state = 1;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
+
+    @Builder
+    public Planner(String content, Date deadline, User user) {
+        this.content = content;
+        this.deadline = deadline;
+        this.user = user;
+        this.createAt = LocalDateTime.now();
+        this.updateAt = LocalDateTime.now();
+    }
+
+
 
 }
