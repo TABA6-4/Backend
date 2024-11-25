@@ -1,0 +1,58 @@
+[33mad5058d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mHileeS[m[33m)[m HEAD@{0}: reset: moving to ad5058d
+[33m75a3f7b[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{1}: pull origin main: Fast-forward
+[33mb550001[m[33m ([m[1;31morigin/HileeS[m[33m)[m HEAD@{2}: pull origin main: Fast-forward
+[33mad5058d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mHileeS[m[33m)[m HEAD@{3}: commit: upadte entity
+[33m3bae1ee[m HEAD@{4}: checkout: moving from Hilees to HileeS
+[33m3bae1ee[m HEAD@{5}: checkout: moving from main to Hilees
+[33m5760a64[m[33m ([m[1;32mmain[m[33m)[m HEAD@{6}: pull origin HileeS: Fast-forward
+[33mca18889[m HEAD@{7}: checkout: moving from HileeS to main
+[33m3bae1ee[m HEAD@{8}: checkout: moving from main to HileeS
+[33mca18889[m HEAD@{9}: checkout: moving from HileeS to main
+[33m3bae1ee[m HEAD@{10}: checkout: moving from main to HileeS
+[33mca18889[m HEAD@{11}: checkout: moving from HileeS to main
+[33m3bae1ee[m HEAD@{12}: pull origin main: Fast-forward
+[33m0e80396[m HEAD@{13}: pull origin main: Fast-forward
+[33m282daa5[m HEAD@{14}: commit: update planner
+[33mca18889[m HEAD@{15}: rebase (finish): returning to refs/heads/HileeS
+[33mca18889[m HEAD@{16}: rebase (start): checkout refs/heads/main
+[33m84f2315[m HEAD@{17}: checkout: moving from main to HileeS
+[33mca18889[m HEAD@{18}: checkout: moving from HileeS to main
+[33m84f2315[m HEAD@{19}: checkout: moving from main to HileeS
+[33mca18889[m HEAD@{20}: checkout: moving from main to main
+[33mca18889[m HEAD@{21}: rebase (finish): returning to refs/heads/main
+[33mca18889[m HEAD@{22}: rebase (pick): create plan, get Planner
+[33m84f2315[m HEAD@{23}: rebase (start): checkout HEAD
+[33m84f2315[m HEAD@{24}: pull origin main: Fast-forward
+[33m605ac26[m HEAD@{25}: checkout: moving from main to HileeS
+[33me577fbc[m HEAD@{26}: pull --rebase origin HileeS (finish): returning to refs/heads/main
+[33me577fbc[m HEAD@{27}: pull --rebase origin HileeS (pick): create plan, get Planner
+[33mc90067e[m HEAD@{28}: pull --rebase origin HileeS (pick): User Register v0.2 (email and name check)
+[33m605ac26[m HEAD@{29}: pull --rebase origin HileeS (start): checkout 605ac2636c9a202046c3ceee4417ffd8fc8adee8
+[33m58f340e[m HEAD@{30}: commit: create plan, get Planner
+[33m84f2315[m HEAD@{31}: pull origin main: Fast-forward
+[33m605ac26[m HEAD@{32}: pull origin HileeS: Fast-forward
+[33m998625d[m HEAD@{33}: checkout: moving from HileeS to main
+[33m605ac26[m HEAD@{34}: checkout: moving from main to HileeS
+[33m998625d[m HEAD@{35}: checkout: moving from HileeS to main
+[33m605ac26[m HEAD@{36}: commit: create PlannerRepository
+[33mb3cff20[m HEAD@{37}: commit: create entity
+[33m922ac4d[m HEAD@{38}: commit: rollback actions
+[33m462ff2b[m HEAD@{39}: checkout: moving from main to HileeS
+[33m998625d[m HEAD@{40}: checkout: moving from HileeS to main
+[33m462ff2b[m HEAD@{41}: checkout: moving from main to HileeS
+[33m998625d[m HEAD@{42}: checkout: moving from HileeS to main
+[33m462ff2b[m HEAD@{43}: checkout: moving from main to HileeS
+[33m998625d[m HEAD@{44}: checkout: moving from HiLeeS to main
+[33m462ff2b[m HEAD@{45}: checkout: moving from main to HiLeeS
+[33mf66ddaa[m HEAD@{46}: checkout: moving from HiLeeS to main
+[33m462ff2b[m HEAD@{47}: pull origin HiLeeS: Fast-forward
+[33m998625d[m HEAD@{48}: checkout: moving from HiLeeS to HiLeeS
+[33m998625d[m HEAD@{49}: branch: Reset to origin/HiLeeS
+[33m998625d[m HEAD@{50}: pull origin main: Fast-forward
+[33m38b3a3b[m HEAD@{51}: rebase: checkout HiLeeS
+[33m38b3a3b[m HEAD@{52}: rebase: checkout HiLeeS
+[33m38b3a3b[m HEAD@{53}: pull origin main: Fast-forward
+[33m7d05f6c[m HEAD@{54}: checkout: moving from main to HiLeeS
+[33mf66ddaa[m HEAD@{55}: pull: Fast-forward
+[33m7d05f6c[m HEAD@{56}: Branch: renamed refs/heads/main to refs/heads/main
+[33m7d05f6c[m HEAD@{58}: commit (initial): first commit

@@ -8,6 +8,7 @@ import com.example.focus.repository.UserRepository;
 import com.example.focus.service.UserService;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class UserController {
 
     @PostMapping("/check-name")
     public ResponseEntity<NameCheckDTO> checkName(@Valid @RequestBody NameCheckDTO nameCheckDTO) {
-        userService.validateName(nameCheckDTO.getName());
+        userService.validateName(nameCheckDTO.getUsername());
         return ResponseEntity.ok(nameCheckDTO);
     }
 
@@ -49,12 +50,12 @@ public class UserController {
     @Transactional
     public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
         userService.validateEmail(userDTO.getEmail());
-        userService.validateName(userDTO.getName());
+        userService.validateName(userDTO.getUsername());
 
         User user = new User();
         user.setEmail(userDTO.getEmail());
-        user.setName(userDTO.getName());
-        user.setPasswd(userDTO.getPasswd());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
         user.setCreateAt(LocalDateTime.now());
         userRepository.save(user);
 

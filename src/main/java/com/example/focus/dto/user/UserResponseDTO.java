@@ -7,11 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 public class UserResponseDTO {
     private Long getUser_id;
-    private String name;
+    private String username;
     private String email;
 
     public UserResponseDTO(User user) {
-        this.name = user.getName();
+        this.username = user.getUsername();
         this.getUser_id = user.getUser_id();
         this.email = user.getEmail();
     }

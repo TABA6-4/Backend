@@ -10,10 +10,10 @@ import lombok.*;
 public class NameCheckDTO {
 
     @NotBlank(message = "Name cannot be empty.")
-    private String name;
+    private String username;
 
-    public NameCheckDTO(String name) {
+    public NameCheckDTO(String username) {
         //@AllArgsConstructor 사용 안하고 생성자 명시함
-        this.name = name;
+        this.username = username;
     }
 }
