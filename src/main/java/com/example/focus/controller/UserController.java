@@ -2,17 +2,20 @@ package com.example.focus.controller;
 
 import com.example.focus.dto.user.EmailCheckDTO;
 import com.example.focus.dto.user.NameCheckDTO;
-import com.example.focus.dto.user.UserRegistrationDTO;
+import com.example.focus.dto.user.UserDTO;
 import com.example.focus.entity.User;
 import com.example.focus.repository.UserRepository;
 import com.example.focus.service.UserService;
 
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,44 +30,36 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     private UserService userService;
 
 
     @PostMapping("/check-email")
-    public ResponseEntity<String> checkEmail(@RequestBody EmailCheckDTO emailCheckDTO) {
+    public ResponseEntity<EmailCheckDTO> checkEmail(@Valid @RequestBody EmailCheckDTO emailCheckDTO) {
         userService.validateEmail(emailCheckDTO.getEmail());
-        return ResponseEntity.ok("Email is valid and available.");
+        return ResponseEntity.ok(emailCheckDTO);
     }
 
     @PostMapping("/check-name")
-    public ResponseEntity<String> checkName(@RequestBody NameCheckDTO nameCheckDTO) {
-        userService.validateName(nameCheckDTO.getName());
-        return ResponseEntity.ok("Name is valid and available.");
+    public ResponseEntity<NameCheckDTO> checkName(@Valid @RequestBody NameCheckDTO nameCheckDTO) {
+        userService.validateName(nameCheckDTO.getUsername());
+        return ResponseEntity.ok(nameCheckDTO);
     }
-
-    /*@PostMapping("/register")
-    @Transactional
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-
-        if (user.getPasswd() == null || user.getPasswd().isEmpty()) {
-            return ResponseEntity.badRequest().body("Password cannot be null or empty");
-        }
-        user.setCreateAt(LocalDateTime.now());  // 생성 시간 설정
-        user.setUpdateAt(LocalDateTime.now());  // 업데이트 시간 설정
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
-    }*/
 
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<String> registerUser(UserRegistrationDTO dto) {
-        userService.validateEmail(dto.getEmail());
-        userService.validateName(dto.getName());
-        User user = new User(dto.getEmail(), dto.getName(), dto.getPassword());
+    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
+        userService.validateEmail(userDTO.getEmail());
+        userService.validateName(userDTO.getUsername());
+
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setCreateAt(LocalDateTime.now());
         userRepository.save(user);
 
-        return ResponseEntity.ok("User registered successfully");
+        userDTO.setResponseMessage("User registered successfully");
+        return ResponseEntity.ok(userDTO);
     }
 }

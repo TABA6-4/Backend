@@ -14,10 +14,10 @@ import java.util.List;
 public interface PlannerRepository extends JpaRepository<Planner, Long> {
 
     // 유저와 deadline 기준으로 Planner 조회
-    @Query("SELECT p FROM Planner p WHERE p.user = :user AND p.deadline <= :deadline")
+    @Query("SELECT p FROM Planner p WHERE p.user = :user AND p.date <= :date")
     List<Planner> findPlannersByUserAndDeadline(
             @Param("user") User user,
-            @Param("deadline") Date deadline
+            @Param("date") Date date
     );
 
     // 유저 기준으로 모든 Planner 조회

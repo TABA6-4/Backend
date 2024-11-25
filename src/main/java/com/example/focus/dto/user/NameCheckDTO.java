@@ -1,15 +1,19 @@
 package com.example.focus.dto.user;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 public class NameCheckDTO {
-    private String name;
 
-    public NameCheckDTO(String name) {
+    @NotBlank(message = "Name cannot be empty.")
+    private String username;
+
+    public NameCheckDTO(String username) {
         //@AllArgsConstructor 사용 안하고 생성자 명시함
-        this.name = name;
+        this.username = username;
     }
 }
