@@ -7,30 +7,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "Measurements")
+@Table(name = "weekly_report")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class Measurement {
-
+public class WeeklyReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long measureId;
+    private Long weeklyReport_id;
 
-    private String intensity; // 진동도
-    private LocalDateTime startTime; // 측정 시각
+    private LocalDate weekStartDate;
+    private LocalDate weekEndDate;
+    private Long totalFocusedTime;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "measurement", cascade = CascadeType.ALL)
-    private List<MeasureResult> measureResults;
-
+    // Getters and setters
 }

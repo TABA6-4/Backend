@@ -6,13 +6,13 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 public class UserResponseDTO {
-    private Long userId;
+    private Long getUser_id;
     private String name;
     private String email;
 
     public UserResponseDTO(User user) {
         this.name = user.getName();
-        this.userId = user.getUserId();
+        this.getUser_id = user.getUser_id();
         this.email = user.getEmail();
     }
 }

@@ -56,7 +56,6 @@ public class UserController {
         user.setName(userDTO.getName());
         user.setPasswd(userDTO.getPasswd());
         user.setCreateAt(LocalDateTime.now());
-        user.setUpdateAt(LocalDateTime.now());
         userRepository.save(user);
 
         userDTO.setResponseMessage("User registered successfully");

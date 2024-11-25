@@ -38,16 +38,16 @@ public class PlannerService {
     }
 
 
-    public List<Planner> getPlannersByUserId(Long userId, Date deadline) {
+    public List<Planner> getPlannersByUserId(Long userId, Date date) {
         // 유저 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found with ID: " + userId)
         );
 
         // Planner 조회
-        if (deadline != null) {
+        if (date != null) {
             // 특정 deadline 기준으로 조회
-            return plannerRepository.findPlannersByUserAndDeadline(user, deadline);
+            return plannerRepository.findPlannersByUserAndDeadline(user, date);
         } else {
             // 모든 Planner 조회
             return plannerRepository.findPlannersByUser(user);
