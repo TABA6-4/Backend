@@ -33,8 +33,8 @@ public class PlannerController {
     @GetMapping("/{userId}")
     public ResponseEntity<List<Planner>> getPlannersByUserId(
             @PathVariable Long userId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
-        List<Planner> planners = plannerService.getPlannersByUserId(userId, deadline);
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        List<Planner> planners = plannerService.getPlannersByUserId(userId, date);
         if (planners.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

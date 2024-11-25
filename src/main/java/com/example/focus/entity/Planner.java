@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "Planner")
+@Table(name = "planner")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,36 +15,28 @@ import java.util.Date;
 public class Planner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "plannerId")
-    private Long plannerId;
+    private Long planner_id;
 
-    @Column(name = "content", nullable = false)
-    private String content;
-
-    @Column(name = "deadline", nullable = false)
-    private Date deadline;
-
-    @Column(name = "createAt")
-    private LocalDateTime createAt;
-
-    @Column(name = "updateAt")
-    private LocalDateTime updateAt;
-
-    @Column(name = "state")
-    private int state = 1;
+    private String title;
+    private LocalDate date;
+    private String state;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private VideoSession videoSession;
+
+
     @Builder
-    public Planner(String content, Date deadline, User user) {
-        this.content = content;
-        this.deadline = deadline;
+    public Planner(String title, LocalDate date, User user) {
+        this.title = title;
+        this.date = date;
         this.user = user;
-        this.createAt = LocalDateTime.now();
-        this.updateAt = LocalDateTime.now();
+
     }
 
 
