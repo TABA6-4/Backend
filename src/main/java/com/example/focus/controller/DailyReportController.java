@@ -1,7 +1,6 @@
 package com.example.focus.controller;
 
-import com.example.focus.dto.ConcentrationSummaryDTO;
-import com.example.focus.entity.DailyReport;
+import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.service.VideoSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,12 +19,12 @@ public class DailyReportController {
 
     private final VideoSessionService videoSessionService;
 
-    @GetMapping("/{userId}/{date}/summary")
+    @GetMapping("/{user_id}/{date}/summary")
     public ResponseEntity<ConcentrationSummaryDTO> getConcentrationSummary(
-            @PathVariable Long userId,
+            @PathVariable Long user_id,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        ConcentrationSummaryDTO summary = videoSessionService.getConcentrationSummary(userId, date);
+        ConcentrationSummaryDTO summary = videoSessionService.getConcentrationSummary(user_id, date);
         return ResponseEntity.ok(summary);
     }
 

@@ -1,4 +1,4 @@
-package com.example.focus.dto;
+package com.example.focus.dto.concentrationResult;
 
 import lombok.Data;
 import lombok.Getter;

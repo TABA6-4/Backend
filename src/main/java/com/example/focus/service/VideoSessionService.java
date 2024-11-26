@@ -1,17 +1,15 @@
 package com.example.focus.service;
 
 
-import com.example.focus.dto.ConcentrationSummaryDTO;
+import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.entity.ConcentrationResult;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.UserRepository;
 import com.example.focus.repository.VideoSessionRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
