@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+import java.sql.Time;
 
 @Entity
 @Table(name = "concentration_result")
@@ -20,8 +19,8 @@ public class ConcentrationResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long result_id;
 
-    private LocalDateTime focusedTime;
-    private LocalDateTime notFocusedTime;
+    private Time focusedTime;
+    private Time notFocusedTime;
     private Double averageScore;
 
     @OneToOne
