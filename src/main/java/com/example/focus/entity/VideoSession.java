@@ -1,11 +1,13 @@
 package com.example.focus.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +27,7 @@ public class VideoSession {
     private LocalDateTime endTime;
     private Long duration;
     private String title;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

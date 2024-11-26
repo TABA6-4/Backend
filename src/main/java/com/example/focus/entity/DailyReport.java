@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class DailyReport {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long report_id;
