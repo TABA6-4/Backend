@@ -19,4 +19,13 @@ public interface VideoSessionRepository extends JpaRepository<VideoSession, Long
             @Param("date") LocalDate date
     );
 
+    @Query("SELECT vs FROM VideoSession vs " +
+            "LEFT JOIN FETCH vs.concentrationResult cr " +
+            "WHERE vs.user.user_id = :userId AND vs.date = :date")
+    List<VideoSession> findAllByUserAndDateWithConcentrationResult(
+            //집중도 결과와 함께 조회
+            @Param("userId") Long userId,
+            @Param("date") LocalDate date
+    );
+
 }// t

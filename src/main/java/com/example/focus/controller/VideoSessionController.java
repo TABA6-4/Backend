@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VideoSessionController {
 
-
     private final VideoSessionService videoSessionService;
 
     @GetMapping("/{userId}/{date}")

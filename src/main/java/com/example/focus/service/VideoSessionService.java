@@ -1,6 +1,8 @@
 package com.example.focus.service;
 
 
+import com.example.focus.dto.ConcentrationSummaryDTO;
+import com.example.focus.entity.ConcentrationResult;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.UserRepository;
@@ -14,11 +16,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class VideoSessionService {
 
     @Autowired
-    private VideoSessionRepository videoSessionRepository;
+    private final VideoSessionRepository videoSessionRepository;
+
+    public VideoSessionService(VideoSessionRepository videoSessionRepository) {
+        this.videoSessionRepository = videoSessionRepository;
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -31,4 +36,27 @@ public class VideoSessionService {
         );
         return videoSessionRepository.findVideoSessionsByUserAndDate(user, date);
     }
+
+    public ConcentrationSummaryDTO getConcentrationSummary(Long userId, LocalDate date) {
+        List<VideoSession> sessions = videoSessionRepository.findAllByUserAndDateWithConcentrationResult(userId, date);
+
+        long totalFocusedTime = 0;
+        long totalNotFocusedTime = 0;
+        long totalDuration = 0;
+
+        for (VideoSession session : sessions) {
+            ConcentrationResult result = session.getConcentrationResult();
+            if (result != null) {
+                totalFocusedTime += result.getFocusedTime().toSecondOfDay(); // Time to seconds
+                totalNotFocusedTime += result.getNotFocusedTime().toSecondOfDay(); // Time to seconds
+            }
+            totalDuration += session.getDuration();
+        }
+
+        double focusedRatio = totalDuration > 0 ? (double) totalFocusedTime / totalDuration : 0.0;
+        double notFocusedRatio = totalDuration > 0 ? (double) totalNotFocusedTime / totalDuration : 0.0;
+
+        return new ConcentrationSummaryDTO(totalFocusedTime, totalNotFocusedTime, totalDuration, focusedRatio, notFocusedRatio);
+    }
+
 }
