@@ -16,5 +16,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+#  profiles:
+#    active: default
+#  main:
+#    jvm-arguments: "-Djava.library.path=libs/native"  #JVM 옵션 추가
+
+
 jwt:  #터미널에 openssl rand -hex 32 입력. HS256 알고리즘 사용
   secret: 93f4e4a4f4a16bada44520c35a55b3b57a03e322dc5aa1b540b4f0c5f1ed5d89
