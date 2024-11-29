@@ -21,6 +21,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class OpenCvCaptureApplication {
 
     public static void main(String[] args) {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        System.out.println("OpenCV Library Loaded Successfully");
 //        // OpenCV 네이티브 라이브러리 로드
 //        // OpenCV의 함수 및 클래스 사용을 위해 라이브러리를 로드해야 함
 //        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

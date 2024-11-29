@@ -54,7 +54,8 @@ bootRun {
 
 //openCvTest 돌리기용
 tasks.withType(JavaExec) {
-    jvmArgs = ["-Djava.library.path=libs/native"]
+    //jvmArgs = ["-Djava.library.path=libs/native"]
+    systemProperty "java.library.path", "${projectDir}/libs/native"
 }
 
 tasks.named('test') {
