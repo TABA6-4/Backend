@@ -44,18 +44,6 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    //opencv
-    implementation files('libs/opencv-4100.jar')
-}
-
-bootRun {
-    jvmArgs = ['-Djava.library.path=C:libs/native']
-}
-
-//openCvTest 돌리기용
-tasks.withType(JavaExec) {
-    //jvmArgs = ["-Djava.library.path=libs/native"]
-    systemProperty "java.library.path", "${projectDir}/libs/native"
 }
 
 tasks.named('test') {
