@@ -47,6 +47,11 @@ dependencies {
     //opencv
     implementation files('libs/opencv-4100.jar')
 }
+
+bootRun {
+    jvmArgs = ['-Djava.library.path=C:libs/native']
+}
+
 //openCvTest 돌리기용
 tasks.withType(JavaExec) {
     jvmArgs = ["-Djava.library.path=libs/native"]

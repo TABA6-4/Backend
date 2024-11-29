@@ -2,9 +2,12 @@ spring:
   application:
     name: focus
   datasource:
-    url: jdbc:mysql://yuni2.iptime.org:3306/Focus
-    username: TABA
-    password: eksrnreogkrry
+    #url: jdbc:mysql://yuni2.iptime.org:3306/Focus
+#    username: TABA
+#    password: eksrnreogkrry
+    url: jdbc:mysql://localhost:3306/taba
+    username: root
+    password: Eksrnreogkrry1!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -15,11 +18,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-
-#  profiles:
-#    active: default
-#  main:
-#    jvm-arguments: "-Djava.library.path=libs/native"  #JVM 옵션 추가
+#  security:
+#    user:
+#      name: user
+#      password: 1234
+  profiles:
+    active: default
+  main:
+    jvm-arguments: "-Djava.library.path=libs/native"  #JVM 옵션 추가
 
 
 jwt:  #터미널에 openssl rand -hex 32 입력. HS256 알고리즘 사용
