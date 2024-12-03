@@ -5,6 +5,9 @@ spring:
     url: jdbc:mysql://yuni2.iptime.org:3306/Focus
     username: TABA
     password: eksrnreogkrry
+#    url: jdbc:mysql://localhost:3306/taba
+#    username: root
+#    password: Eksrnreogkrry1!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -15,6 +18,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+#  security:
+#    user:
+#      name: user
+#      password: 1234
+
 
 jwt:  #터미널에 openssl rand -hex 32 입력. HS256 알고리즘 사용
   secret: 93f4e4a4f4a16bada44520c35a55b3b57a03e322dc5aa1b540b4f0c5f1ed5d89
