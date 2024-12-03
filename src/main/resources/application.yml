@@ -2,12 +2,9 @@ spring:
   application:
     name: focus
   datasource:
-    url: jdbc:mysql://yuni2.iptime.org:3306/Focus
-    username: TABA
+    url: jdbc:mysql://focus.c94y6cs2sggm.ap-northeast-2.rds.amazonaws.com/Focus
+    username: admin
     password: eksrnreogkrry
-#    url: jdbc:mysql://localhost:3306/taba
-#    username: root
-#    password: Eksrnreogkrry1!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true

@@ -7,11 +7,11 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
+@Data
 public class planRequestDTO {
+    private Long user_id;
     private String title;
     private LocalDate date;
-    private long id;
 
 
     public static Planner toPlanner(planRequestDTO dto, User user){

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -31,11 +31,11 @@ public class PlannerController {
     }
 
     //플래너 조회(useer_id, password로 조회)
-    @GetMapping("/{userId}")
+    @GetMapping("/{user_id}/{date}")
     public ResponseEntity<List<Planner>> getPlannersByUserId(
-            @PathVariable Long userId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        List<Planner> planners = plannerService.getPlannersByUserId(userId, date);
+            @PathVariable Long user_id,
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        List<Planner> planners = plannerService.getPlannersByUserId(user_id, date);
         if (planners.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
