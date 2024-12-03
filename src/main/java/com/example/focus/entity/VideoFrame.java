@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class VideoFrame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long frame_id;
+    private Long frameId;
 
     private Double concentration;
     private LocalDateTime timestamp;
