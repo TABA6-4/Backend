@@ -1,6 +1,5 @@
 package com.example.focus.service;
 
-
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.entity.ConcentrationResult;
 import com.example.focus.entity.User;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,9 +26,7 @@ public class VideoSessionService {
     @Autowired
     private UserRepository userRepository;
 
-
     public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
-        // 유저 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found with ID: " + userId)
         );
@@ -45,8 +43,8 @@ public class VideoSessionService {
         for (VideoSession session : sessions) {
             ConcentrationResult result = session.getConcentrationResult();
             if (result != null) {
-                totalFocusedTime += result.getFocusedTime().toSecondOfDay(); // Time to seconds
-                totalNotFocusedTime += result.getNotFocusedTime().toSecondOfDay(); // Time to seconds
+                totalFocusedTime += result.getFocusedTime().toSecondOfDay(); // 초 단위로 변환
+                totalNotFocusedTime += result.getNotFocusedTime().toSecondOfDay(); // 초 단위로 변환
             }
             totalDuration += session.getDuration();
         }
@@ -54,7 +52,27 @@ public class VideoSessionService {
         double focusedRatio = totalDuration > 0 ? (double) totalFocusedTime / totalDuration : 0.0;
         double notFocusedRatio = totalDuration > 0 ? (double) totalNotFocusedTime / totalDuration : 0.0;
 
-        return new ConcentrationSummaryDTO(totalFocusedTime, totalNotFocusedTime, totalDuration, focusedRatio, notFocusedRatio);
+        // 날짜와 사용자 ID를 포함하여 DTO 반환
+        return new ConcentrationSummaryDTO(
+                date,
+                userId,
+                totalFocusedTime,
+                totalNotFocusedTime,
+                totalDuration,
+                focusedRatio,
+                notFocusedRatio
+        );
     }
 
+    public List<ConcentrationSummaryDTO> getWeeklyConcentrationSummary(Long userId, LocalDate startDate) {
+        List<ConcentrationSummaryDTO> summaries = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            LocalDate date = startDate.plusDays(i);
+            ConcentrationSummaryDTO summary = getConcentrationSummary(userId, date);
+            summaries.add(summary);
+        }
+
+        return summaries;
+    }
 }
