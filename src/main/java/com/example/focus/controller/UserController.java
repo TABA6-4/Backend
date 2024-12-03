@@ -21,15 +21,6 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/users")
 public class UserController {
 
-
-    @GetMapping("/register")
-    public String register() {
-        return "Registration page or logic here";
-    }
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 
@@ -46,20 +37,4 @@ public class UserController {
         return ResponseEntity.ok(nameCheckDTO);
     }
 
-    @PostMapping("/register")
-    @Transactional
-    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.validateEmail(userDTO.getEmail());
-        userService.validateName(userDTO.getUsername());
-
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        user.setCreateAt(LocalDateTime.now());
-        userRepository.save(user);
-
-        userDTO.setResponseMessage("User registered successfully");
-        return ResponseEntity.ok(userDTO);
-    }
 }

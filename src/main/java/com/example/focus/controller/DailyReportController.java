@@ -19,6 +19,7 @@ public class DailyReportController {
 
     private final VideoSessionService videoSessionService;
 
+    //일별 리포트 조회
     @GetMapping("/{user_id}/{date}/summary")
     public ResponseEntity<ConcentrationSummaryDTO> getConcentrationSummary(
             @PathVariable Long user_id,

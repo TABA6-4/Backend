@@ -21,7 +21,7 @@ public class PlannerController {
     @Autowired
     private final PlannerService plannerService;
 
-
+    //planner 생성
     @PostMapping()
     public ResponseEntity<Planner> createPlan(@RequestBody planRequestDTO planRequestDTODTO) {
         Planner plan = plannerService.createPlanner(planRequestDTODTO);
@@ -30,6 +30,7 @@ public class PlannerController {
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //플래너 조회(useer_id, password로 조회)
     @GetMapping("/{userId}")
     public ResponseEntity<List<Planner>> getPlannersByUserId(
             @PathVariable Long userId,
