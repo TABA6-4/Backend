@@ -26,6 +26,7 @@ public interface WeeklyReportRepository extends JpaRepository<WeeklyReport, Long
     ORDER BY dr.date
 """)
     List<Map<String, Object>> findWeeklyReport(
+            //위의 쿼리문에서 정의한 Map 타입의 객체를 원소로 하는 배열을 리턴하여 7일간의 리스트 반환
             @Param("user_id") Long user_id,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate

@@ -1,6 +1,7 @@
 package com.example.focus.service;
 
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
+import com.example.focus.dto.videoSession.VideoSessionDTO;
 import com.example.focus.entity.ConcentrationResult;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
@@ -26,14 +27,16 @@ public class VideoSessionService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
+    /*public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found with ID: " + userId)
         );
         return videoSessionRepository.findVideoSessionsByUserAndDate(user, date);
-    }
+    }*/
 
     public ConcentrationSummaryDTO getConcentrationSummary(Long userId, LocalDate date) {
+        // UserId, 날짜를 받아서 해당 날짜의 집중도 리포트 출력
+        // videoSession 리스트를 받아서 원소들의 멤버 변수를 각각 더하여 출력
         List<VideoSession> sessions = videoSessionRepository.findAllByUserAndDateWithConcentrationResult(userId, date);
 
         long totalFocusedTime = 0;
@@ -74,5 +77,33 @@ public class VideoSessionService {
         }
 
         return summaries;
+    }
+
+    public List<VideoSessionDTO> getVideoSessionsWithConcentration(Long userId, LocalDate date) {
+        //비디오 세션별 집중도 결과 출력
+        List<VideoSession> sessions = videoSessionRepository.findAllByUserAndDateWithConcentrationResult(userId, date);
+        List<VideoSessionDTO> sessionDTOs = new ArrayList<>();
+
+        for (VideoSession session : sessions) {
+            ConcentrationResult result = session.getConcentrationResult();
+
+            long focusedTime = result != null ? result.getFocusedTime().toSecondOfDay() : 0; // 초 단위
+            long notFocusedTime = result != null ? result.getNotFocusedTime().toSecondOfDay() : 0; // 초 단위
+            long totalTime = focusedTime + notFocusedTime;
+
+            double focusRatio = totalTime > 0 ? (double) focusedTime / totalTime : 0.0;
+            double notFocusRatio = totalTime > 0 ? (double) notFocusedTime / totalTime : 0.0;
+
+            sessionDTOs.add(new VideoSessionDTO(
+                    session.getSession_id(),
+                    session.getTitle(), // 세션 이름 예시
+                    focusedTime,
+                    notFocusedTime,
+                    focusRatio,
+                    notFocusRatio
+            ));
+        }
+
+        return sessionDTOs;
     }
 }

@@ -20,6 +20,7 @@ public class DailyReportController {
     private final VideoSessionService videoSessionService;
 
     @GetMapping("/{user_id}/{date}/summary")
+    //UserId, 날짜 받아서 일일 리포트 출력
     public ResponseEntity<ConcentrationSummaryDTO> getConcentrationSummary(
             @PathVariable Long user_id,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
