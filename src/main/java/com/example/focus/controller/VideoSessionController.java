@@ -24,7 +24,7 @@ public class VideoSessionController {
 
     private final VideoSessionService videoSessionService;
 
-    @GetMapping("/{userId}/{date}")
+   /* @GetMapping("/{userId}/{date}")
     public ResponseEntity<List<VideoSessionDTO>> getVideoSessions(
             @PathVariable Long userId, @PathVariable @DateTimeFormat (pattern = "yyyy-MM-dd") LocalDate date) {
         List<VideoSession> sessions = videoSessionService.getAllVideoSessionsByUserAndDate(userId, date);
@@ -32,5 +32,15 @@ public class VideoSessionController {
                 .map(VideoSessionDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
+    }*/
+
+    @GetMapping("/{user_id}/{date}")
+    //UserId, 날짜 받아서 해당 날짜의 비디오 세션별 집중도 정리해서 출력
+    public ResponseEntity<List<VideoSessionDTO>> getVideoSessionsByUserAndDate(
+            @PathVariable Long user_id,
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+    ) {
+        List<VideoSessionDTO> sessions = videoSessionService.getVideoSessionsWithConcentration(user_id, date);
+        return ResponseEntity.ok(sessions);
     }
 }

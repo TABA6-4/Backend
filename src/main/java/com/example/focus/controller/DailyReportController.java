@@ -21,6 +21,7 @@ public class DailyReportController {
 
     //일별 리포트 조회
     @GetMapping("/{user_id}/{date}/summary")
+    //UserId, 날짜 받아서 일일 리포트 출력
     public ResponseEntity<ConcentrationSummaryDTO> getConcentrationSummary(
             @PathVariable Long user_id,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date

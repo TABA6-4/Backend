@@ -1,26 +1,20 @@
 package com.example.focus.dto.concentrationResult;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.time.LocalDate;
+
 @Data
+@AllArgsConstructor
 public class ConcentrationSummaryDTO {
-    private long totalFocusedTime;
-    private long totalNotFocusedTime;
-    private long totalDuration;
-    private double focusedRatio;
-    private double notFocusedRatio;
-
-    public ConcentrationSummaryDTO(long totalFocusedTime, long totalNotFocusedTime, long totalDuration, double focusedRatio, double notFocusedRatio) {
-        this.totalFocusedTime = totalFocusedTime;
-        this.totalNotFocusedTime = totalNotFocusedTime;
-        this.totalDuration = totalDuration;
-        this.focusedRatio = focusedRatio;
-        this.notFocusedRatio = notFocusedRatio;
-    }
-
-    // Getters and Setters
+    private LocalDate date;           // 날짜
+    private Long userId;              // 사용자 ID
+    private long totalFocusedTime;    // 집중 시간 (초)
+    private long totalNotFocusedTime; // 비집중 시간 (초)
+    private long totalDuration;       // 총 세션 길이 (초)
+    private double focusedRatio;      // 집중 비율 (0~1)
+    private double notFocusedRatio;   // 비집중 비율 (0~1)
 }
