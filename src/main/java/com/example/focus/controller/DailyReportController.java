@@ -2,6 +2,7 @@ package com.example.focus.controller;
 
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.service.VideoSessionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("api/daily-report")
 @RequiredArgsConstructor
+@Tag(name = "일별 리포트 조회", description = "API") // API를 그룹화할 태그명을 지정
 public class DailyReportController {
 
     private final VideoSessionService videoSessionService;

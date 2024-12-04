@@ -1,4 +1,4 @@
-package com.example.focus.dto;
+package com.example.focus.dto.sign;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

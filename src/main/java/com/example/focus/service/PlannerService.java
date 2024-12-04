@@ -9,7 +9,8 @@ import com.example.focus.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class PlannerService {
     private final UserRepository userRepository;
 
     public Planner createPlanner(planRequestDTO planRequestDTO){
-        User user = userRepository.findById(planRequestDTO.getId()).orElse(null);
+        User user = userRepository.findById(planRequestDTO.getUser_id()).orElse(null);
         if(user == null){
             return null;
         }
@@ -38,7 +39,7 @@ public class PlannerService {
     }
 
 
-    public List<Planner> getPlannersByUserId(Long userId, Date date) {
+    public List<Planner> getPlannersByUserId(Long userId, LocalDate date) {
         // 유저 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found with ID: " + userId)
@@ -50,7 +51,7 @@ public class PlannerService {
             return plannerRepository.findPlannersByUserAndDeadline(user, date);
         } else {
             // 모든 Planner 조회
-            return plannerRepository.findPlannersByUser(user);
+            return null; //plannerRepository.findPlannersByUser(user);
         }
 
     }

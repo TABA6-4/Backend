@@ -3,6 +3,7 @@ package com.example.focus.controller;
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.service.VideoSessionService;
 import com.example.focus.service.WeeklyReportService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/weekly-report")
+@Tag(name="주간 리포트 조회", description = "API")
 public class WeeklyReportController {
 
     private final WeeklyReportService weeklyReportService;
