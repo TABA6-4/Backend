@@ -1,7 +1,7 @@
 package com.example.focus.service;
 
-import com.example.focus.dto.SignUpDto;
-import com.example.focus.dto.UserDto;
+import com.example.focus.dto.sign.SignUpDto;
+import com.example.focus.dto.sign.UserDto;
 import com.example.focus.dto.jwt.JwtToken;
 import com.example.focus.jwt.JwtTokenProvider;
 import com.example.focus.repository.UserRepository;
