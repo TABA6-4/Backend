@@ -31,19 +31,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 해당 API에 대해서는 모든 요청을 허가
                         .anyRequest().permitAll()
-<<<<<<< HEAD
 //                        .requestMatchers("/users/sign-up", "/users/sign-in", "/process-frame").permitAll()
 //                        // USER 권한이 있어야 요청할 수 있음
 //                        .requestMatchers("/users/test").hasRole("USER")    //JWT 페이로드에 ROLE_ 접두사가 없다면, hasRole("USER") 대신 hasAuthority("USER")를 사용
 //                        // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
 //                        .anyRequest().authenticated()
-=======
                         //.requestMatchers("/users/sign-up", "/users/sign-in").permitAll()
                         // USER 권한이 있어야 요청할 수 있음
                         //.requestMatchers("/users/test").hasRole("USER")    //JWT 페이로드에 ROLE_ 접두사가 없다면, hasRole("USER") 대신 hasAuthority("USER")를 사용
                         // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
                         //.anyRequest().authenticated()
->>>>>>> 1203e87ac647d9acf1a9fc56f4f81c124342a09c
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)

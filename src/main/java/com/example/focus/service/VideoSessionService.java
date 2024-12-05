@@ -2,6 +2,8 @@ package com.example.focus.service;
 
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.dto.videoSession.VideoSessionDTO;
+import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
+import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.ConcentrationResult;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
@@ -10,7 +12,10 @@ import com.example.focus.repository.VideoSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +25,12 @@ public class VideoSessionService {
     @Autowired
     private final VideoSessionRepository videoSessionRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public VideoSessionService(VideoSessionRepository videoSessionRepository) {
         this.videoSessionRepository = videoSessionRepository;
     }
-
-    @Autowired
-    private UserRepository userRepository;
 
     /*public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
@@ -105,5 +110,71 @@ public class VideoSessionService {
         }
 
         return sessionDTOs;
+    }
+
+    public VideoSessionResponseDTO startSession(VideoSessionRequestDTO request) {
+        if (request.getUser_id() == null) {
+            throw new IllegalArgumentException("User ID must not be null");
+        }
+
+        User user = userRepository.findById(request.getUser_id())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + request.getUser_id()));
+        VideoSession session = new VideoSession();
+        session.setUser(user);
+        session.setTitle(request.getTitle());
+        session.setStartTime(LocalDateTime.now());
+        session.setDate(Date.valueOf(LocalDateTime.now().toLocalDate()));
+
+        VideoSession savedSession = videoSessionRepository.save(session);
+
+        return new VideoSessionResponseDTO(
+                savedSession.getSession_id(),
+                savedSession.getUser().getUser_id(),
+                savedSession.getTitle(),
+                savedSession.getStartTime(),
+                savedSession.getEndTime(),
+                savedSession.getDuration()
+        );
+    }
+
+    public VideoSessionResponseDTO endSession(Long sessionId) {
+        // 세션 조회
+        VideoSession session = videoSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("Session not found with ID: " + sessionId));
+
+        // 종료 시간 설정
+        LocalDateTime now = LocalDateTime.now();
+        session.setEndTime(now);
+
+        // 세션 길이 계산
+        if (session.getStartTime() == null) {
+            throw new IllegalStateException("Start time must be set before ending the session");
+        }
+
+        long duration = Duration.between(session.getStartTime(), now).getSeconds();
+        session.setDuration(duration);
+
+        // 업데이트된 세션 저장
+        VideoSession updatedSession = videoSessionRepository.save(session);
+
+        return new VideoSessionResponseDTO(
+                updatedSession.getSession_id(),
+                updatedSession.getUser().getUser_id(),
+                updatedSession.getTitle(),
+                updatedSession.getStartTime(),
+                updatedSession.getEndTime(),
+                updatedSession.getDuration()
+        );
+    }
+
+    private VideoSessionResponseDTO mapToResponseDTO(VideoSession session) {
+        return new VideoSessionResponseDTO(
+                session.getSession_id(),
+                session.getUser().getUser_id(),
+                session.getTitle(),
+                session.getStartTime(),
+                session.getEndTime(),
+                session.getDuration()
+        );
     }
 }

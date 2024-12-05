@@ -2,16 +2,16 @@ package com.example.focus.controller;
 
 
 import com.example.focus.dto.videoSession.VideoSessionDTO;
+import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
+import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.service.VideoSessionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,5 +42,19 @@ public class VideoSessionController {
     ) {
         List<VideoSessionDTO> sessions = videoSessionService.getVideoSessionsWithConcentration(user_id, date);
         return ResponseEntity.ok(sessions);
+    }
+
+    // 세션 시작
+    @PostMapping("/start")
+    public ResponseEntity<VideoSessionResponseDTO> startSession(@Valid @RequestBody VideoSessionRequestDTO request) {
+        VideoSessionResponseDTO response = videoSessionService.startSession(request);
+        return ResponseEntity.ok(response);
+    }
+
+    // 세션 종료
+    @PostMapping("/end/{sessionId}")
+    public ResponseEntity<VideoSessionResponseDTO> endSession(@PathVariable Long sessionId) {
+        VideoSessionResponseDTO response = videoSessionService.endSession(sessionId);
+        return ResponseEntity.ok(response);
     }
 }
