@@ -3,6 +3,7 @@ package com.example.focus.service;
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.dto.videoSession.VideoSessionDTO;
 import com.example.focus.entity.ConcentrationResult;
+import com.example.focus.entity.MessageData;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.UserRepository;
@@ -105,5 +106,17 @@ public class VideoSessionService {
         }
 
         return sessionDTOs;
+    }
+
+
+    //user_id와 title로 video session 조회
+    public VideoSession createSession(MessageData messageData) {
+        User user = userRepository.findById(messageData.getUser_id()).orElse(null);
+        if(user == null){
+            return null;
+        }
+
+        VideoSession videoSession = videoSessionRepository.findByUserAndTitle(user, messageData.getTitle());
+        return videoSession;
     }
 }

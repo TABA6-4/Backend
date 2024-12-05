@@ -18,6 +18,7 @@ public class SignUpDto {
     private String email;
     private String password;
     private String username;
+    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     public User toEntity(String encodedPassword, List<String> roles) {
