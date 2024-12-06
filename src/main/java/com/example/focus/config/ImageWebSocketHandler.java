@@ -4,14 +4,15 @@ import com.example.focus.dto.videoSession.VideoSessionImageDTO;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.service.FlaskService;
 import com.example.focus.service.VideoSessionService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.UUID;
 
+@CrossOrigin
 @Component
 public class ImageWebSocketHandler extends TextWebSocketHandler {
 
