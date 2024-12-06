@@ -4,6 +4,7 @@ package com.example.focus.service;
 import com.example.focus.dto.planner.planRequestDTO;
 import com.example.focus.entity.Planner;
 import com.example.focus.entity.User;
+import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.PlannerRepository;
 import com.example.focus.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,4 +56,16 @@ public class PlannerService {
         }
 
     }
+
+    public Planner createSessionPlanner(VideoSession videoSession){
+        Planner planner = new Planner(videoSession);
+        if(planner == null){
+            return null;
+        }
+
+        plannerRepository.save(planner);
+        return planner;
+
+    }
+
 }

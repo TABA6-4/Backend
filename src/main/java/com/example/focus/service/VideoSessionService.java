@@ -25,6 +25,9 @@ public class VideoSessionService {
     @Autowired
     private final VideoSessionRepository videoSessionRepository;
 
+    @Autowired
+    PlannerService plannerService;
+
     public VideoSessionService(VideoSessionRepository videoSessionRepository) {
         this.videoSessionRepository = videoSessionRepository;
     }
@@ -119,7 +122,6 @@ public class VideoSessionService {
     }
 
 
-
     public VideoSessionResponseDTO startSession(VideoSessionRequestDTO request) {
         if (request.getUser_id() == null) {
             throw new IllegalArgumentException("User ID must not be null");
@@ -164,6 +166,9 @@ public class VideoSessionService {
 
         // 업데이트된 세션 저장
         VideoSession updatedSession = videoSessionRepository.save(session);
+
+        //플래너에 세션 저장
+        plannerService.createSessionPlanner(session);
 
         return new VideoSessionResponseDTO(
                 updatedSession.getSession_id(),

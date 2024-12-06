@@ -39,6 +39,14 @@ public class Planner {
 
     }
 
+    public Planner(VideoSession videoSession) {
+        this.title = videoSession.getTitle();
+        this.date = videoSession.getDate().toLocalDate();
+        this.state = "check";
+        this.user = videoSession.getUser();
+        this.videoSession = videoSession;
+    }
+
 
 
 }
