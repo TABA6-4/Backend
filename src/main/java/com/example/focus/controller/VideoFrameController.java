@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/video-frame")
 @RequiredArgsConstructor
 public class VideoFrameController {

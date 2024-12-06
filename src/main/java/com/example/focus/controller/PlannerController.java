@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/planner")
 @RequiredArgsConstructor
+@CrossOrigin
 @Tag(name = "user Planner", description = "API") // API를 그룹화할 태그명을 지정
 public class PlannerController {
 
