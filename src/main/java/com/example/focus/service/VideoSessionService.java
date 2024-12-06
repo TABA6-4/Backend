@@ -5,7 +5,6 @@ import com.example.focus.dto.videoSession.VideoSessionDTO;
 import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
 import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.ConcentrationResult;
-import com.example.focus.entity.MessageData;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.UserRepository;
@@ -33,12 +32,6 @@ public class VideoSessionService {
     @Autowired
     private UserRepository userRepository;
 
-    /*public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalArgumentException("User not found with ID: " + userId)
-        );
-        return videoSessionRepository.findVideoSessionsByUserAndDate(user, date);
-    }*/
 
     public ConcentrationSummaryDTO getConcentrationSummary(Long userId, LocalDate date) {
         // UserId, 날짜를 받아서 해당 날짜의 집중도 리포트 출력
@@ -115,15 +108,17 @@ public class VideoSessionService {
 
 
     //user_id와 title로 video session 조회
-    public VideoSession createSession(MessageData messageData) {
-        User user = userRepository.findById(messageData.getUser_id()).orElse(null);
+    public VideoSession createSession(Long user_id, String title) {
+        User user = userRepository.findById(user_id).orElse(null);
         if (user == null) {
+            System.err.println("User with ID " + user_id + " not found");
             return null;
         }
 
-        VideoSession videoSession = videoSessionRepository.findByUserAndTitle(user, messageData.getTitle());
-        return videoSession;
+        return videoSessionRepository.findByUserAndTitle(user, title);
     }
+
+
 
     public VideoSessionResponseDTO startSession(VideoSessionRequestDTO request) {
         if (request.getUser_id() == null) {
