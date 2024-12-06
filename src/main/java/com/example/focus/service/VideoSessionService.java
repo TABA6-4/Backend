@@ -5,6 +5,7 @@ import com.example.focus.dto.videoSession.VideoSessionDTO;
 import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
 import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.ConcentrationResult;
+import com.example.focus.entity.MessageData;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
 import com.example.focus.repository.UserRepository;
@@ -25,12 +26,12 @@ public class VideoSessionService {
     @Autowired
     private final VideoSessionRepository videoSessionRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     public VideoSessionService(VideoSessionRepository videoSessionRepository) {
         this.videoSessionRepository = videoSessionRepository;
     }
+
+    @Autowired
+    private UserRepository userRepository;
 
     /*public List<VideoSession> getAllVideoSessionsByUserAndDate(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
@@ -112,6 +113,18 @@ public class VideoSessionService {
         return sessionDTOs;
     }
 
+
+    //user_id와 title로 video session 조회
+    public VideoSession createSession(MessageData messageData) {
+        User user = userRepository.findById(messageData.getUser_id()).orElse(null);
+        if (user == null) {
+            return null;
+        }
+
+        VideoSession videoSession = videoSessionRepository.findByUserAndTitle(user, messageData.getTitle());
+        return videoSession;
+    }
+
     public VideoSessionResponseDTO startSession(VideoSessionRequestDTO request) {
         if (request.getUser_id() == null) {
             throw new IllegalArgumentException("User ID must not be null");
@@ -164,17 +177,6 @@ public class VideoSessionService {
                 updatedSession.getStartTime(),
                 updatedSession.getEndTime(),
                 updatedSession.getDuration()
-        );
-    }
-
-    private VideoSessionResponseDTO mapToResponseDTO(VideoSession session) {
-        return new VideoSessionResponseDTO(
-                session.getSession_id(),
-                session.getUser().getUser_id(),
-                session.getTitle(),
-                session.getStartTime(),
-                session.getEndTime(),
-                session.getDuration()
         );
     }
 }
