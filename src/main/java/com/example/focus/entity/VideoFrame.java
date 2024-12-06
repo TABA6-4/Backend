@@ -19,7 +19,7 @@ public class VideoFrame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long frame_id;
 
-    private Double concentration;
+    private int concentration;
     private LocalDateTime timestamp;
 
     @ManyToOne

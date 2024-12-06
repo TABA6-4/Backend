@@ -35,3 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
+/Backend/src/main/resources/application.yml
