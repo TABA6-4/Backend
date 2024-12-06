@@ -25,7 +25,7 @@ public class VideoSession {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Long duration;
+    private Long duration = 0L;
     private String title;
     private Date date;
 
