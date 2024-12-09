@@ -55,7 +55,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
-          key: ${{ secrets.KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           command: |
             sudo docker rm -f $(docker ps -qa) # 모든 기존 컨테이너 제거
             sudo docker pull ${{ secrets.DOCKER_REPO }}/focus # Docker 이미지 Pull
