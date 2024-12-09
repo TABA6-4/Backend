@@ -24,7 +24,7 @@ public class VideoFrameRequestDTO {
         VideoFrame videoFrame = new VideoFrame();
         videoFrame.setVideoSession(session);
         videoFrame.setConcentration(this.concentration);
-        videoFrame.setTimestamp(this.timestamp);
+        videoFrame.setTimestamp(LocalDateTime.now());
         return videoFrame;
     }
 }
