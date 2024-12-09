@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/video-session")
-@CrossOrigin
 @RequiredArgsConstructor
 @Tag(name = "content", description = "영상 측정 관리 API") // API를 그룹화할 태그명을 지정
 public class VideoSessionController {

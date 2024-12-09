@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api")
-@CrossOrigin
 @Tag(name = "user sign-up, sing-in", description = "API") // API를 그룹화할 태그명을 지정
 public class AuthController {
 
