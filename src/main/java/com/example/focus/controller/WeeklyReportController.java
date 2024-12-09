@@ -5,6 +5,7 @@ import com.example.focus.service.VideoSessionService;
 import com.example.focus.service.WeeklyReportService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/weekly-report")
