@@ -15,7 +15,6 @@ import java.util.Map;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin
 @RequestMapping("api/weekly-report")
 @Tag(name="주간 리포트 조회", description = "API")
 public class WeeklyReportController {

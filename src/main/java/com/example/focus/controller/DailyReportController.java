@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("api/daily-report")
 @RequiredArgsConstructor
-@CrossOrigin
 @Tag(name = "일별 리포트 조회", description = "API") // API를 그룹화할 태그명을 지정
 public class DailyReportController {
 

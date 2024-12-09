@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/users")
 @Tag(name = "user check", description = "API") // API를 그룹화할 태그명을 지정
 public class UserController {
