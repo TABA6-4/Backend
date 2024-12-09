@@ -1,36 +1,58 @@
 package com.example.focus.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class FlaskService {
 
+    private static final String FLASK_SERVER_URL = "http://43.203.180.244:5000/predict";
     private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void sendToAIServer(String image, Long session_id) {
+    public void sendToAIServer(byte[] image, Long session_id) {
         try {
-            String url = "http://localhost:5000/process-image";
+            // 헤더 설정
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-            Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("image", image);
-            requestBody.put("session_id", session_id);
+            // 멀티파트 요청 바디 구성
+            MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
 
-            String jsonBody = objectMapper.writeValueAsString(requestBody);
-            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+            // 이미지 파일 추가
+            Resource imageResource = new ByteArrayResource(image) {
+                @Override
+                public String getFilename() {
+                    return "image.jpg"; // Flask에서 파일 이름이 필요할 경우
+                }
+            };
+            requestBody.add("file", imageResource);
 
-            String response = restTemplate.postForObject(url, entity, String.class);
-            System.out.println("Response from AI server: " + response);
+            // session_id 추가
+            requestBody.add("session_id", session_id);
+
+            // 요청 엔티티 생성
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+            // Flask 서버로 요청 전송
+            ResponseEntity<String> response = restTemplate.exchange(FLASK_SERVER_URL, HttpMethod.POST, requestEntity, String.class);
+
+            // 응답 처리
+            if (response.getStatusCode().is2xxSuccessful()) {
+                System.out.println("Response from AI server: " + response.getBody());
+            } else {
+                System.err.println("Failed to send data to AI server. Status Code: " + response.getStatusCode());
+            }
         } catch (Exception e) {
+            System.err.println("Error occurred while sending data to AI server: " + e.getMessage());
             e.printStackTrace();
         }
     }
