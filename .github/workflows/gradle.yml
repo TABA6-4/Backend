@@ -56,9 +56,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          envs: GITHUB_SHA
-        # script: |
-        #   sudo docker rm -f $(docker ps -qa) # 모든 기존 컨테이너 제거
-        #   sudo docker pull ${{ secrets.DOCKER_REPO }}/6thtaba4 # Docker 이미지 Pull
-        #   docker-compose up -d # Docker Compose로 컨테이너 실행
-        #   docker image prune -f # 사용하지 않는 Docker 이미지 정리
+          command: |
+            sudo docker rm -f $(docker ps -qa) # 모든 기존 컨테이너 제거
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/6thtaba4 # Docker 이미지 Pull
+            docker-compose up -d # Docker Compose로 컨테이너 실행
+            docker image prune -f # 사용하지 않는 Docker 이미지 정리
+
