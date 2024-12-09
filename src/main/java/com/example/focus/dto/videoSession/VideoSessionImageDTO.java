@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class VideoSessionImageDTO {
     private Long user_id;
     private String title; // 세션 제목
-    private String image;
+    //private byte[] image; // 바이너리 데이터를 저장하도록 수정
 }
