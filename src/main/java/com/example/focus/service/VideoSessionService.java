@@ -111,7 +111,7 @@ public class VideoSessionService {
 
 
     //user_id와 title로 video session 조회
-    public VideoSession createSession(Long user_id, String title) {
+    public VideoSession findSession(Long user_id, String title) {
         User user = userRepository.findById(user_id).orElse(null);
         if (user == null) {
             System.err.println("User with ID " + user_id + " not found");

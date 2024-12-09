@@ -28,7 +28,7 @@ public interface VideoSessionRepository extends JpaRepository<VideoSession, Long
             @Param("date") LocalDate date
     );
 
-    @Query("SELECT v FROM VideoSession v WHERE v.user = :user AND v.title = :title AND v.endTime = null")
+    @Query("SELECT v FROM VideoSession v WHERE v.user = :user AND v.title = :title AND v.endTime IS NULL")
     VideoSession findByUserAndTitle(
             @Param("user") User user,
             @Param("title") String title
