@@ -46,8 +46,8 @@ jobs:
       - name: Docker build & push to Docker repo
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/6thtaba4 .
-          docker push ${{ secrets.DOCKER_REPO }}/6thtaba4
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/focus .
+          docker push ${{ secrets.DOCKER_REPO }}/focus
 
       # appleboy/ssh-action@master 액션을 사용하여 서버에 SSH로 접속하고, Docker 작업 수행
       - name: Deploy to server
