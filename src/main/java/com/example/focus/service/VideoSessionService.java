@@ -4,11 +4,8 @@ import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.dto.videoSession.VideoSessionDTO;
 import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
 import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
-import com.example.focus.entity.ConcentrationResult;
-import com.example.focus.entity.User;
-import com.example.focus.entity.VideoSession;
-import com.example.focus.repository.UserRepository;
-import com.example.focus.repository.VideoSessionRepository;
+import com.example.focus.entity.*;
+import com.example.focus.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +13,7 @@ import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +32,15 @@ public class VideoSessionService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DailyReportRepository dailyReportRepository;
+
+    @Autowired
+    private ConcentrationResultRepository concentrationResultRepository;
+
+    @Autowired
+    private VideoFrameRepository videoFrameRepository;
 
 
     public ConcentrationSummaryDTO getConcentrationSummary(Long userId, LocalDate date) {
@@ -170,6 +177,8 @@ public class VideoSessionService {
         //플래너에 세션 저장
         plannerService.createSessionPlanner(session);
 
+        calculateVideoFrame(videoFrameRepository.findAllVideoFrameBySessionId(sessionId));
+
         return new VideoSessionResponseDTO(
                 updatedSession.getSession_id(),
                 updatedSession.getUser().getUser_id(),
@@ -178,5 +187,64 @@ public class VideoSessionService {
                 updatedSession.getEndTime(),
                 updatedSession.getDuration()
         );
+    }
+
+
+    public void calculateVideoFrame(List<VideoFrame> videoFrames) {
+        long focusedTime = 0;
+        long notFocusedTime = 0;
+        long sessionId = videoFrames.get(0).getVideoSession().getSession_id();
+
+        VideoSession videoSession = videoSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("Session not found with ID: " + sessionId));
+        ConcentrationResult result = concentrationResultRepository.findBySessionId(sessionId);
+        if (result == null) {
+            throw new IllegalArgumentException("ConcentrationResult not found with ID: " + sessionId);
+        }
+
+        LocalDateTime temp = videoFrames.get(0).getTimestamp();
+
+        for (VideoFrame videoFrame : videoFrames) {
+            if (videoFrame.getConcentration() < 2) {
+                if (temp != null) {
+                    focusedTime += Duration.between(temp, videoFrame.getTimestamp()).getSeconds();
+                }
+            } else{
+                if (temp != null) {
+                    notFocusedTime += Duration.between(temp, videoFrame.getTimestamp()).getSeconds();
+                }
+            }
+            temp = videoFrame.getTimestamp();
+        }
+
+
+        double score = (double) focusedTime / (focusedTime + notFocusedTime);
+
+        result.setFocusedTime(LocalTime.ofSecondOfDay(focusedTime));
+        result.setNotFocusedTime(LocalTime.ofSecondOfDay(notFocusedTime));
+        result.setAverageScore(score*100);
+
+        ConcentrationResult updatedResult = concentrationResultRepository.save(result);
+
+        updateDailyReport(videoSession);
+    }
+
+    public void updateDailyReport(VideoSession videoSession) {
+        long userId = videoSession.getUser().getUser_id();
+        long focusedTime  = 0;
+        long notFocusedTime = 0;
+        LocalDate date = videoSession.getDate().toLocalDate();
+        List<VideoSession> sessions = videoSessionRepository.findByUserAndDate(userId, date);
+
+        for (VideoSession v : sessions) {
+            ConcentrationResult tempResult = concentrationResultRepository.findBySessionId(v.getSession_id());
+            focusedTime += tempResult.getFocusedTime().toSecondOfDay();
+            notFocusedTime += tempResult.getNotFocusedTime().toSecondOfDay();
+        }
+
+        DailyReport dailyReport = dailyReportRepository.findByUserIdAndDate(userId, videoSession.getDate());
+        double score = (double) focusedTime / (focusedTime + notFocusedTime);
+        dailyReport.setTotalTime(focusedTime);
+        dailyReport.setPercentage(score*100);
     }
 }
