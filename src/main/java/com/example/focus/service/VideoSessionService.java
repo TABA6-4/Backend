@@ -229,7 +229,7 @@ public class VideoSessionService {
     }
 
     // 세션 종료 후 세션 정보를 바탕으로 일일 리포트 신규 작성 혹은 업데이트
-    public void updateDailyReport(VideoSession videoSession) {
+    private void updateDailyReport(VideoSession videoSession) {
         long userId = videoSession.getUser().getUser_id();
         long focusedTime  = 0;
         long notFocusedTime = 0;
