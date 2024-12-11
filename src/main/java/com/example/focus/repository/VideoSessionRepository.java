@@ -21,7 +21,7 @@ public interface VideoSessionRepository extends JpaRepository<VideoSession, Long
 
     @Query("SELECT v FROM VideoSession v WHERE v.user.user_id = :userId AND v.date = :date")
     List<VideoSession> findByUserAndDate(
-            @Param("user") long userId,
+            @Param("userId") Long userId,
             @Param("date") LocalDate date
     );
 

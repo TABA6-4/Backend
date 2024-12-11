@@ -1,22 +1,13 @@
 package com.example.focus.service;
 
 import com.example.focus.dto.videoFrame.VideoFrameRequestDTO;
-import com.example.focus.entity.ConcentrationResult;
-import com.example.focus.entity.DailyReport;
 import com.example.focus.entity.VideoFrame;
 import com.example.focus.entity.VideoSession;
-import com.example.focus.repository.ConcentrationResultRepository;
-import com.example.focus.repository.DailyReportRepository;
 import com.example.focus.repository.VideoFrameRepository;
 import com.example.focus.repository.VideoSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 @Service
 public class VideoFrameService {
