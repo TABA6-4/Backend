@@ -8,6 +8,7 @@ import com.example.focus.repository.VideoSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class VideoFrameService {
 
@@ -28,4 +29,6 @@ public class VideoFrameService {
         // 저장
         videoFrameRepository.save(videoFrame);
     }
+
+
 }

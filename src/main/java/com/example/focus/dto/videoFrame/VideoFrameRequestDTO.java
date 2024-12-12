@@ -16,7 +16,7 @@ public class VideoFrameRequestDTO {
     @NotNull(message = "Focus level must not be null")
     private int concentration;
 
-    @NotNull(message = "Timestamp must not be null")
+    //@NotNull(message = "Timestamp must not be null")
     private LocalDateTime timestamp;
 
     // DTO -> Entity 변환 메서드

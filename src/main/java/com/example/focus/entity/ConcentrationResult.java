@@ -28,6 +28,4 @@ public class ConcentrationResult {
     @OneToOne
     @JoinColumn(name = "session_id", nullable = false)
     private VideoSession videoSession;
-
-
 }

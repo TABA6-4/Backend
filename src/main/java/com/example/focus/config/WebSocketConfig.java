@@ -18,6 +18,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        // "/image" URL로 오는 WebSocket 요청을 ImageWebSocketHandler로 처리
         registry.addHandler(imageWebSocketHandler, "/image").setAllowedOrigins("*");
     }
 
