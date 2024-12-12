@@ -50,12 +50,13 @@ jobs:
 
       # appleboy/ssh-action@master 액션을 사용하여 서버에 SSH로 접속하고, Docker 작업 수행
       - name: Deploy to server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v.1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
-          command: |
+          script: |
+            echo "Pulling image from docker hub ..."
             sudo docker rm -f $(docker ps -qa) # 모든 기존 컨테이너 제거
             sudo docker pull ${{ secrets.DOCKER_REPO }}/focus # Docker 이미지 Pull
             docker-compose up -d # Docker Compose로 컨테이너 실행
