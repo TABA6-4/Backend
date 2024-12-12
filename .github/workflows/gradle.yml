@@ -34,8 +34,7 @@ jobs:
         run: |
           cd ./src/main/resources
           touch ./application.yml
-          echo "${{ secrets.APPLICATION_PROD }}" > ./application.yml
-
+          echo "${{ secrets.APPLICATION_PROD }}"  | base64 --decode  > ./application.yml
       # Gradle을 통해 소스를 빌드
       - name: Build with Gradle
         run: |
