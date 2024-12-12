@@ -50,7 +50,7 @@ jobs:
 
       # appleboy/ssh-action@master 액션을 사용하여 서버에 SSH로 접속하고, Docker 작업 수행
       - name: Deploy to server
-        uses: appleboy/ssh-action@v.1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
