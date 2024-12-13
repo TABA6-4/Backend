@@ -45,7 +45,7 @@ public class AuthService {
                 authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 성공 시 JWT 토큰 생성
-        return jwtTokenProvider.generateToken(authentication);
+        return jwtTokenProvider.generateToken(authentication, userRepository.getUserIdByEmail(email));
     }
 
     /**
