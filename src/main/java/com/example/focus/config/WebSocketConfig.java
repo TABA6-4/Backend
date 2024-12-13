@@ -20,6 +20,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         // "/image" URL로 오는 WebSocket 요청을 ImageWebSocketHandler로 처리
         registry.addHandler(imageWebSocketHandler, "/image").setAllowedOrigins("*");
+        registry.addHandler(pushNotificationWebSocketHandler(), "/notifications").setAllowedOrigins("*");
     }
 
     // WebSocket 버퍼 크기 및 설정
@@ -29,5 +30,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
         container.setMaxTextMessageBufferSize(10 * 1024 * 1024); // 텍스트 메시지 최대 크기: 10MB
         container.setMaxBinaryMessageBufferSize(10 * 1024 * 1024); // 바이너리 메시지 최대 크기: 10MB
         return container;
+    }
+
+    // PushNotificationWebSocketHandler 빈 등록
+    @Bean
+    public PushNotificationWebSocketHandler pushNotificationWebSocketHandler() {
+        return new PushNotificationWebSocketHandler();
     }
 }
