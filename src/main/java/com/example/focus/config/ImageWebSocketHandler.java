@@ -36,12 +36,12 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
         sessions.add(session);
         log.info("New session connected: {}", session.getId());
     }
-
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        sessions.remove(session);
-        log.info("Session disconnected: {}", session.getId());
-    }
+//
+//    @Override
+//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+//        sessions.remove(session);
+//        log.info("Session disconnected: {}", session.getId());
+//    }
 
 
     @Override
