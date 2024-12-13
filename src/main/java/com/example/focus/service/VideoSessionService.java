@@ -52,17 +52,26 @@ public class VideoSessionService {
         long totalDuration = 0;
 
         for (VideoSession session : sessions) {
+
             ConcentrationResult result = session.getConcentrationResult();
             if (result != null) {
-                totalFocusedTime += result.getFocusedTime().toSecondOfDay(); // 초 단위로 변환
-                totalNotFocusedTime += result.getNotFocusedTime().toSecondOfDay(); // 초 단위로 변환
+
+                long tempFocusedTime = result.getFocusedTime().toSecondOfDay();
+                long tempNotFocusedTime = result.getNotFocusedTime().toSecondOfDay();
+
+                totalFocusedTime += tempFocusedTime; // 초 단위로 변환
+                totalNotFocusedTime += tempNotFocusedTime; // 초 단위로 변환
+                totalDuration += tempFocusedTime + tempNotFocusedTime;
             }
-            totalDuration += session.getDuration();
+
         }
+        double focusedRatio = 0;
+        double notFocusedRatio = 0;
 
-        double focusedRatio = totalDuration > 0 ? (double) totalFocusedTime / totalDuration : 0.0;
-        double notFocusedRatio = totalDuration > 0 ? (double) totalNotFocusedTime / totalDuration : 0.0;
-
+        if(totalDuration > 0){
+            focusedRatio = (double) totalFocusedTime / totalDuration;
+            notFocusedRatio = (double) totalNotFocusedTime / totalDuration;
+        }
         // 날짜와 사용자 ID를 포함하여 DTO 반환
         return new ConcentrationSummaryDTO(
                 date,
