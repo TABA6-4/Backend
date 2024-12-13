@@ -8,14 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -28,10 +28,24 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    // 연결된 클라이언트를 관리하는 세션 리스트
+    private final Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<>());
+
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        sessions.add(session);
+        log.info("New session connected: {}", session.getId());
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        sessions.remove(session);
+        log.info("Session disconnected: {}", session.getId());
+    }
+
+
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws IOException {
-        System.out.println("Binary message received");
-
         // 바이너리 메시지 읽기
         byte[] payload = message.getPayload().array();
 
@@ -68,10 +82,27 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
         // 클라이언트로 응답 전송
         session.sendMessage(new BinaryMessage("Image and metadata processed successfully".getBytes()));
         log.info("Image processed successfully");
-
-
     }
 
+    /**
+     * 서버에서 임의로 알림을 보내는 메서드
+     *
+     * @param message 클라이언트에 보낼 메시지
+     */
+    public void sendServerNotification(String message) {
+        synchronized (sessions) {
+            for (WebSocketSession session : sessions) {
+                if (session.isOpen()) {
+                    try {
+                        session.sendMessage(new TextMessage(message));
+                        log.info("Notification sent to session: {}", session.getId());
+                    } catch (IOException e) {
+                        log.error("Error sending notification to session: {}", session.getId(), e);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * 바이너리 메시지에서 JSON 메타데이터와 이미지 데이터를 구분하는 구분자(\n)의 인덱스 찾기
