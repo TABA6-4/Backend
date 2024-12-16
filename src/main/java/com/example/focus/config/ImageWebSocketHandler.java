@@ -31,12 +31,12 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
     // 연결된 클라이언트를 관리하는 세션 리스트
     private final Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<>());
 
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        sessions.add(session);
-        log.info("New session connected: {}", session.getId());
-    }
-//
+//    @Override
+//    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+//        sessions.add(session);
+//        log.info("New session connected: {}", session.getId());
+//    }
+////
 //    @Override
 //    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 //        sessions.remove(session);
@@ -84,25 +84,25 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
         log.info("Image processed successfully");
     }
 
-    /**
-     * 서버에서 임의로 알림을 보내는 메서드
-     *
-     * @param message 클라이언트에 보낼 메시지
-     */
-    public void sendServerNotification(String message) {
-        synchronized (sessions) {
-            for (WebSocketSession session : sessions) {
-                if (session.isOpen()) {
-                    try {
-                        session.sendMessage(new TextMessage(message));
-                        log.info("Notification sent to session: {}", session.getId());
-                    } catch (IOException e) {
-                        log.error("Error sending notification to session: {}", session.getId(), e);
-                    }
-                }
-            }
-        }
-    }
+//    /**
+//     * 서버에서 임의로 알림을 보내는 메서드
+//     *
+//     * @param message 클라이언트에 보낼 메시지
+//     */
+//    public void sendServerNotification(String message) {
+//        synchronized (sessions) {
+//            for (WebSocketSession session : sessions) {
+//                if (session.isOpen()) {
+//                    try {
+//                        session.sendMessage(new TextMessage(message));
+//                        log.info("Notification sent to session: {}", session.getId());
+//                    } catch (IOException e) {
+//                        log.error("Error sending notification to session: {}", session.getId(), e);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 바이너리 메시지에서 JSON 메타데이터와 이미지 데이터를 구분하는 구분자(\n)의 인덱스 찾기
