@@ -58,6 +58,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             echo "Pulling image from docker hub ..."
+            echo ${{ secrets.DOCKER_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             sudo docker rm -fs $(docker ps -qa) # 모든 기존 컨테이너 제거
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest # Docker 이미지 Pull
             docker-compose up -d # Docker Compose로 컨테이너 실행
