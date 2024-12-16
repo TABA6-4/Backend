@@ -280,19 +280,28 @@ public class VideoSessionService {
 
         dailyReportRepository.save(dailyReport);
     }
-    public VideoSessionResponseDTO getSession(Long sessionId) {
+    public VideoSessionDTO getSession(Long sessionId) {
         VideoSession videoSession = videoSessionRepository.findById(sessionId).orElse(null);
         if (videoSession == null) {
             throw new IllegalArgumentException("Video session not found with ID: " + sessionId);
         }
 
-        return new VideoSessionResponseDTO(
+        ConcentrationResult result = videoSession.getConcentrationResult();
+
+        long focusedTime = result != null ? result.getFocusedTime().toSecondOfDay() : 0; // 초 단위
+        long notFocusedTime = result != null ? result.getNotFocusedTime().toSecondOfDay() : 0; // 초 단위
+        long totalTime = focusedTime + notFocusedTime;
+
+        double focusRatio = totalTime > 0 ? (double) focusedTime / totalTime : 0.0;
+        double notFocusRatio = totalTime > 0 ? (double) notFocusedTime / totalTime : 0.0;
+
+        return new VideoSessionDTO(
                 videoSession.getSession_id(),
-                videoSession.getUser().getUser_id(),
-                videoSession.getTitle(),
-                videoSession.getStartTime(),
-                videoSession.getEndTime(),
-                videoSession.getDuration()
+                videoSession.getTitle(), // 세션 이름 예시
+                focusedTime,
+                notFocusedTime,
+                focusRatio,
+                notFocusRatio
         );
 
 
