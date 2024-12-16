@@ -197,6 +197,8 @@ public class VideoSessionService {
         );
     }
 
+
+
     // 세션 종료 후 비디오 프레임을 분석해 집중도 계산
     private void calculateVideoFrame(List<VideoFrame> videoFrames) {
         if (videoFrames.isEmpty()) {
@@ -277,5 +279,23 @@ public class VideoSessionService {
         dailyReport.setPercentage(score * 100);
 
         dailyReportRepository.save(dailyReport);
+    }
+    public VideoSessionResponseDTO getSession(Long sessionId) {
+        VideoSession videoSession = videoSessionRepository.findById(sessionId).orElse(null);
+        if (videoSession == null) {
+            throw new IllegalArgumentException("Video session not found with ID: " + sessionId);
+        }
+
+        return new VideoSessionResponseDTO(
+                videoSession.getSession_id(),
+                videoSession.getUser().getUser_id(),
+                videoSession.getTitle(),
+                videoSession.getStartTime(),
+                videoSession.getEndTime(),
+                videoSession.getDuration()
+        );
+
+
+
     }
 }
