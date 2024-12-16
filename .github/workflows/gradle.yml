@@ -58,7 +58,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             echo "Pulling image from docker hub ..."
-            sudo docker rm -rf $(docker ps -qa) # 모든 기존 컨테이너 제거
+            sudo docker rm -fs $(docker ps -qa) # 모든 기존 컨테이너 제거
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest # Docker 이미지 Pull
             docker-compose up -d # Docker Compose로 컨테이너 실행
             docker image prune -f # 사용하지 않는 Docker 이미지 정리
