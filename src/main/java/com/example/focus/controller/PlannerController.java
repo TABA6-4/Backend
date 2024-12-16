@@ -1,6 +1,8 @@
 package com.example.focus.controller;
 import com.example.focus.dto.planner.planRequestDTO;
+import com.example.focus.dto.planner.planResponseDTO;
 import com.example.focus.entity.Planner;
+import com.example.focus.repository.PlannerRepository;
 import com.example.focus.service.PlannerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,10 +39,10 @@ public class PlannerController {
     //플래너 조회(useer_id, password로 조회)
     @GetMapping("/{user_id}/{date}")
     @Operation(summary = "유저 Planner 조회", description = "플래너에서 유저id와 날짜로 조회하는 API")
-    public ResponseEntity<List<Planner>> getPlannersByUserId(
+    public ResponseEntity<List<planResponseDTO>> getPlannersByUserId(
             @PathVariable Long user_id,
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        List<Planner> planners = plannerService.getPlannersByUserId(user_id, date);
+        List<planResponseDTO> planners = plannerService.getPlannersByUserId(user_id, date);
         if (planners.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

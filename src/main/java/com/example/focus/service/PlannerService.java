@@ -2,6 +2,7 @@ package com.example.focus.service;
 
 
 import com.example.focus.dto.planner.planRequestDTO;
+import com.example.focus.dto.planner.planResponseDTO;
 import com.example.focus.entity.Planner;
 import com.example.focus.entity.User;
 import com.example.focus.entity.VideoSession;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,21 +42,27 @@ public class PlannerService {
     }
 
 
-    public List<Planner> getPlannersByUserId(Long userId, LocalDate date) {
-        // 유저 확인
+    // 기존 메서드 수정
+    public List<planResponseDTO> getPlannersByUserId(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found with ID: " + userId)
         );
 
-        // Planner 조회
+        List<Planner> planners;
         if (date != null) {
-            // 특정 deadline 기준으로 조회
-            return plannerRepository.findPlannersByUserAndDeadline(user, date);
+            planners = plannerRepository.findPlannersByUserAndDeadline(user, date);
         } else {
-            // 모든 Planner 조회
-            return null; //plannerRepository.findPlannersByUser(user);
+            planners = plannerRepository.findPlannersByUser(user);
         }
 
+        return planners.stream()
+                .map(planner -> new planResponseDTO(
+                        planner.getPlanner_id(),
+                        planner.getTitle(),
+                        planner.getDate(),
+                        planner.getState()
+                ))
+                .collect(Collectors.toList());
     }
 
     public Planner createSessionPlanner(VideoSession videoSession){
