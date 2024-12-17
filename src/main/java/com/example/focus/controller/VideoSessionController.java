@@ -62,7 +62,7 @@ public class VideoSessionController {
         return ResponseEntity.ok(response);
     }
 
-    // 세션 종료
+    // 세션 조회
     @GetMapping("/{sessionId}")
     public ResponseEntity<VideoSessionDTO> getSession(@PathVariable Long sessionId) {
         VideoSessionDTO response = videoSessionService.getSession(sessionId);

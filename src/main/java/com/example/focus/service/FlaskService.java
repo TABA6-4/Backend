@@ -21,7 +21,7 @@ public class FlaskService {
     private String flaskServerUrl;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public void sendToAIServer(byte[] image, Long session_id) {
+    public String sendToAIServer(byte[] image, Long session_id) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -42,6 +42,7 @@ public class FlaskService {
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 System.out.println("Response from AI server: " + response.getBody());
+                return response.getBody();
             } else {
                 System.err.println("Failed to send data to AI server. Status Code: " + response.getStatusCode());
             }
