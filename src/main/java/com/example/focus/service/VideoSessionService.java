@@ -297,18 +297,7 @@ public class VideoSessionService {
         for (VideoFrame vf : frames){
             int tempConcentration = vf.getConcentration();
             long durationMillis = Duration.between(previousTimestamp, vf.getTimestamp()).toMillis();
-
-            if(tempConcentration == 0){
-                concentration[0] += durationMillis;
-            } else if(tempConcentration == 1){
-                concentration[1] += durationMillis;
-            } else if(tempConcentration == 2){
-                concentration[2] += durationMillis;
-            } else if(tempConcentration == 3){
-                concentration[3] += durationMillis;
-            } else if(tempConcentration == 4){
-                concentration[4] += durationMillis;
-            }
+                concentration[tempConcentration] += durationMillis;
         }
 
         long TotalConcentration = 0;

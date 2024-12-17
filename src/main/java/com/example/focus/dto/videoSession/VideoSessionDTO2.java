@@ -17,9 +17,9 @@ public class VideoSessionDTO2 {
     private long concentration2;
     private long concentration3;
     private long concentration4;
+    private double concentrationRatio0;
     private double concentrationRatio1;
     private double concentrationRatio2;
     private double concentrationRatio3;
     private double concentrationRatio4;
-    private double concentrationRatio5;
 }
