@@ -65,7 +65,7 @@ jobs:
           script: |
             echo "Pulling image from docker hub ..."
             echo ${{ secrets.DOCKER_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin # Docker Hub 로그인
-            sudo docker-compose down --volumes # 기존 컨테이너 및 볼륨 삭제
+            sudo docker compose down --volumes # 기존 컨테이너 및 볼륨 삭제
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest # 최신 Docker 이미지 Pull
             sudo docker-compose up -d # Docker Compose로 컨테이너 실행
             docker image prune -f # 사용하지 않는 Docker 이미지 정리
