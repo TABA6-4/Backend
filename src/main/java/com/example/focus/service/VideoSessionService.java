@@ -319,6 +319,7 @@ public class VideoSessionService {
 
         for(int i = 0; i < 5; i++){
             concentrationRatio[i] = (double) concentration[i] / TotalConcentration;
+            concentration[i] /= 1000;
         }
 
         return new VideoSessionDTO2(
