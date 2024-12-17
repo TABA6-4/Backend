@@ -300,13 +300,13 @@ public class VideoSessionService {
 
             if(tempConcentration == 0){
                 concentration[0] += durationMillis;
-            } else if(tempConcentration == 2){
+            } else if(tempConcentration == 1){
                 concentration[1] += durationMillis;
-            } else if(tempConcentration == 3){
+            } else if(tempConcentration == 2){
                 concentration[2] += durationMillis;
-            } else if(tempConcentration == 4){
+            } else if(tempConcentration == 3){
                 concentration[3] += durationMillis;
-            } else if(tempConcentration == 5){
+            } else if(tempConcentration == 4){
                 concentration[4] += durationMillis;
             }
         }
