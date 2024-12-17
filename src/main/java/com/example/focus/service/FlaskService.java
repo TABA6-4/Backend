@@ -45,10 +45,12 @@ public class FlaskService {
                 return response.getBody();
             } else {
                 System.err.println("Failed to send data to AI server. Status Code: " + response.getStatusCode());
+                return null;
             }
         } catch (Exception e) {
             System.err.println("Error occurred while sending data to AI server: " + e.getMessage());
             e.printStackTrace();
+            return null;
         }
     }
 }
