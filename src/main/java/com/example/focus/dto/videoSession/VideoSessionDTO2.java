@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 public class VideoSessionDTO2 {
     private Long sessionId;            // 비디오 세션 ID
     private String sessionName;        // 비디오 세션 이름 (예시 필드)
-    private long focused1;             // 집중 시간 (초 단위)
-    private long focused2;
-    private long notFocused1;          // 비집중 시간 (초 단위)
-    private long notFocused2;
-    private long sleepTime;
-    private double focus1Ratio;         // 집중 비율 (0 ~ 1)
-    private double focus2Ratio;
-    private double notFocus1Ratio;      // 비집중 비율 (0 ~ 1)
-    private double notFocus2Ratio;
-    private double sleepRatio;
+    private long concentration0;
+    private long concentration1;
+    private long concentration2;
+    private long concentration3;
+    private long concentration4;
+    private double concentrationRatio1;
+    private double concentrationRatio2;
+    private double concentrationRatio3;
+    private double concentrationRatio4;
+    private double concentrationRatio5;
 }

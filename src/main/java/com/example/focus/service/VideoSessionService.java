@@ -324,7 +324,7 @@ public class VideoSessionService {
 
         return new VideoSessionDTO2(
                 videoSession.getSession_id(),
-                videoSession.getTitle(), // 세션 이름 예시
+                videoSession.getTitle(),
                 concentration[0],
                 concentration[1],
                 concentration[2],
