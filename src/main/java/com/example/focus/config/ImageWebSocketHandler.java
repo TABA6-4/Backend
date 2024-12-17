@@ -77,10 +77,11 @@ public class ImageWebSocketHandler extends AbstractWebSocketHandler {
             return;
         }
         // 4. AI 서버로 데이터 전송
-        flaskService.sendToAIServer(imageBytes, videoSession.getSession_id());
+        String result = flaskService.sendToAIServer(imageBytes, videoSession.getSession_id());
 
         // 클라이언트로 응답 전송
         session.sendMessage(new BinaryMessage("Image and metadata processed successfully".getBytes()));
+        session.sendMessage(new TextMessage(result));
         log.info("Image processed successfully");
     }
 
