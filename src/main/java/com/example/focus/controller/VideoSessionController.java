@@ -2,6 +2,7 @@ package com.example.focus.controller;
 
 
 import com.example.focus.dto.videoSession.VideoSessionDTO;
+import com.example.focus.dto.videoSession.VideoSessionDTO2;
 import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
 import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.VideoSession;
@@ -64,8 +65,8 @@ public class VideoSessionController {
 
     // 세션 조회
     @GetMapping("/{sessionId}")
-    public ResponseEntity<VideoSessionDTO> getSession(@PathVariable Long sessionId) {
-        VideoSessionDTO response = videoSessionService.getSession(sessionId);
+    public ResponseEntity<VideoSessionDTO2> getSession(@PathVariable Long sessionId) {
+        VideoSessionDTO2 response = videoSessionService.getSession(sessionId);
         return ResponseEntity.ok(response);
     }
 }
