@@ -2,6 +2,7 @@ package com.example.focus.service;
 
 import com.example.focus.dto.concentrationResult.ConcentrationSummaryDTO;
 import com.example.focus.dto.videoSession.VideoSessionDTO;
+import com.example.focus.dto.videoSession.VideoSessionDTO2;
 import com.example.focus.dto.videoSession.VideoSessionRequestDTO;
 import com.example.focus.dto.videoSession.VideoSessionResponseDTO;
 import com.example.focus.entity.*;
@@ -280,28 +281,49 @@ public class VideoSessionService {
 
         dailyReportRepository.save(dailyReport);
     }
-    public VideoSessionDTO getSession(Long sessionId) {
+    public VideoSessionDTO2 getSession(Long sessionId) {
         VideoSession videoSession = videoSessionRepository.findById(sessionId).orElse(null);
         if (videoSession == null) {
             throw new IllegalArgumentException("Video session not found with ID: " + sessionId);
         }
 
-        ConcentrationResult result = videoSession.getConcentrationResult();
+        List<VideoFrame> frames = videoFrameRepository.findAllVideoFrameBySessionId(sessionId);
 
-        long focusedTime = result != null ? result.getFocusedTime().toSecondOfDay() : 0; // 초 단위
-        long notFocusedTime = result != null ? result.getNotFocusedTime().toSecondOfDay() : 0; // 초 단위
-        long totalTime = focusedTime + notFocusedTime;
 
-        double focusRatio = totalTime > 0 ? (double) focusedTime / totalTime : 0.0;
-        double notFocusRatio = totalTime > 0 ? (double) notFocusedTime / totalTime : 0.0;
+        long[] concentration = new long[5];
+        double[] concentrationRatio = new double[5];
+        LocalDateTime previousTimestamp = frames.get(0).getTimestamp();
 
-        return new VideoSessionDTO(
+        for (VideoFrame vf : frames){
+            int tempConcentration = vf.getConcentration();
+            long durationMillis = Duration.between(previousTimestamp, vf.getTimestamp()).toMillis();
+                concentration[tempConcentration] += durationMillis;
+        }
+
+        long TotalConcentration = 0;
+
+        for(int i = 0; i < 5; i++){
+            TotalConcentration += concentration[i];
+        }
+
+        for(int i = 0; i < 5; i++){
+            concentrationRatio[i] = (double) concentration[i] / TotalConcentration;
+            concentration[i] /= 1000;
+        }
+
+        return new VideoSessionDTO2(
                 videoSession.getSession_id(),
-                videoSession.getTitle(), // 세션 이름 예시
-                focusedTime,
-                notFocusedTime,
-                focusRatio,
-                notFocusRatio
+                videoSession.getTitle(),
+                concentration[0],
+                concentration[1],
+                concentration[2],
+                concentration[3],
+                concentration[4],
+                concentrationRatio[0],
+                concentrationRatio[1],
+                concentrationRatio[2],
+                concentrationRatio[3],
+                concentrationRatio[4]
         );
 
 
